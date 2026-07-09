@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { useProducts } from './hooks/useProducts'
+import ProductGrid from './components/ProductGrid/ProductGrid'
 import './App.css'
 
 function App() {
@@ -42,7 +43,7 @@ function App() {
                 ? 'Loading products...'
                 : error
                   ? `Error: ${error}`
-                  : `${products.length} products loaded`
+                  : `Showing ${products.length} products`
               }
             </p>
           </div>
@@ -57,15 +58,15 @@ function App() {
           </button>
         </header>
 
-        <section>
-          {loading && <p style={{ color: 'var(--text-secondary)' }}>Fetching products from API...</p>}
-          {error && <p style={{ color: 'var(--danger)' }}>Error: {error}</p>}
-          {!loading && !error && (
-            <p style={{ color: 'var(--price-color)' }}>
-              ✅ Successfully loaded {products.length} products. Grid coming next!
-            </p>
-          )}
-        </section>
+        {error && (
+          <div style={{ padding: '20px', color: 'var(--danger)', textAlign: 'center' }}>
+            Error: {error}
+          </div>
+        )}
+
+        {!error && (
+          <ProductGrid products={products} loading={loading} />
+        )}
       </main>
     </div>
   )

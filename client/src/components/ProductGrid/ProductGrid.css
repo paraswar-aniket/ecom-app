@@ -1,0 +1,35 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   ProductGrid — Responsive CSS Grid Layout
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.product-grid {
+  width: 100%;
+}
+
+.product-grid__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--gap);
+  transition: opacity var(--transition-base);
+}
+
+/* Subtle opacity fade during loading (not full skeleton — that comes later) */
+.product-grid__container--loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* ── Responsive Grid Adjustments ────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .product-grid__container {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--gap-sm);
+  }
+}
+
+@media (max-width: 767px) {
+  .product-grid__container {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--gap-xs);
+  }
+}

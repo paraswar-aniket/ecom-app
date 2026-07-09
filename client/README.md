@@ -52,21 +52,26 @@ App.jsx
 │   └── resetFilters()      resets all filters
 │
 ├── Sidebar (aside)         filter controls (coming soon)
-└── ProductGrid (main)      product cards (coming soon)
+└── ProductGrid (main)
+    ├── ProductCard          image, name, price, rating, category badge
+    └── StarRating           reusable filled/half/empty star display
 ```
 
-### API Layer (`productApi.js`)
+### Components
 
-- Axios instance with `baseURL: '/api'` (proxied to Express)
-- `fetchProducts(params, signal)` — builds query string, supports AbortController
-- Handles: `categories`, `minPrice`, `maxPrice`, `minRating`, `sortBy`
+| Component | Purpose |
+|-----------|---------|
+| `ProductGrid` | CSS Grid container with auto-fill responsive columns |
+| `ProductCard` | Glassmorphism card with hover lift, image zoom, gradient category badge |
+| `StarRating` | Full/half/empty star icons with numeric rating display |
 
-### Custom Hook (`useProducts.js`)
+### Key Animations
 
-- Reactive `useEffect` watches all filter state
-- **300ms debounce** to avoid API spam during slider drags
-- **AbortController** cancels in-flight requests on rapid filter changes
-- `resetFilters()` resets everything to defaults
+| Animation | Trigger |
+|-----------|---------|
+| `fadeInUp` | Card entrance — cards fade in and slide up |
+| `translateY(-4px)` | Card hover — subtle lift effect |
+| `scale(1.05)` | Image hover — gentle zoom inside card |
 
 ---
 
@@ -89,8 +94,11 @@ App.jsx
 - ✅ Two-column layout skeleton (aside + main)
 - ✅ API layer with Axios + AbortController
 - ✅ useProducts custom hook with debouncing
-- ✅ Products fetched on mount (48 products verified)
-- 🔲 Product grid & cards
-- 🔲 Sidebar filter controls
-- 🔲 Sort, reset, empty state
-- 🔲 Loading skeletons & animations
+- ✅ ProductCard with hover animations & glassmorphism
+- ✅ ProductGrid with responsive CSS Grid
+- ✅ StarRating reusable component
+- 🔲 Sidebar filter controls (category, price, rating)
+- 🔲 Sort dropdown
+- 🔲 Reset button & empty state
+- 🔲 Loading skeletons & micro-animations
+- 🔲 Responsive mobile design & accessibility
