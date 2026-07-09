@@ -4,12 +4,28 @@ import './ProductCard.css';
 /**
  * ProductCard — Individual product card with image, name, price, rating, and category badge.
  *
+ * Features:
+ * - Lazy-loaded images with object-fit cover
+ * - Text truncation with -webkit-line-clamp
+ * - Hover lift animation + image zoom
+ * - Staggered fadeInUp entrance animation
+ * - Semantic article element with ARIA labels
+ *
  * @param {Object} props
  * @param {Object} props.product - Product object from the API
+ * @param {number} [props.index=0] - Index for staggered animation delay
  */
-function ProductCard({ product }) {
+function ProductCard({ product, index = 0 }) {
+  // Cap stagger delay at 0.5s to avoid cards feeling too slow
+  const animDelay = `${Math.min(index * 0.05, 0.5)}s`;
+
   return (
-    <article className="product-card" id={`product-${product.id}`}>
+    <article
+      className="product-card"
+      id={`product-${product.id}`}
+      style={{ animationDelay: animDelay }}
+      aria-label={`${product.name}, ${product.category}, $${product.price.toFixed(2)}, ${product.rating} stars`}
+    >
       <div className="product-card__image-wrapper">
         <img
           src={product.image_url}
@@ -28,7 +44,7 @@ function ProductCard({ product }) {
         <p className="product-card__description">{product.description}</p>
 
         <div className="product-card__footer">
-          <span className="product-card__price">
+          <span className="product-card__price" aria-label={`Price: $${product.price.toFixed(2)}`}>
             ${product.price.toFixed(2)}
           </span>
           <StarRating rating={product.rating} />

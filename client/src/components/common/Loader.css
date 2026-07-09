@@ -1,0 +1,139 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Loader — Skeleton Cards with Shimmer Animation
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--gap);
+}
+
+.skeleton-card {
+  background: var(--bg-glass);
+  border: 1px solid var(--border);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  animation: fadeInUp 0.3s ease both;
+}
+
+/* Stagger skeleton card entrance */
+.skeleton-card:nth-child(1) { animation-delay: 0s; }
+.skeleton-card:nth-child(2) { animation-delay: 0.05s; }
+.skeleton-card:nth-child(3) { animation-delay: 0.1s; }
+.skeleton-card:nth-child(4) { animation-delay: 0.15s; }
+.skeleton-card:nth-child(5) { animation-delay: 0.2s; }
+.skeleton-card:nth-child(6) { animation-delay: 0.25s; }
+.skeleton-card:nth-child(7) { animation-delay: 0.3s; }
+.skeleton-card:nth-child(8) { animation-delay: 0.35s; }
+
+.skeleton-card__image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: var(--bg-secondary);
+}
+
+.skeleton-card__body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-card__title {
+  height: 18px;
+  width: 80%;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+}
+
+.skeleton-card__desc {
+  height: 14px;
+  width: 100%;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+}
+
+.skeleton-card__desc--short {
+  width: 60%;
+}
+
+.skeleton-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 6px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.skeleton-card__price {
+  height: 20px;
+  width: 60px;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+}
+
+.skeleton-card__stars {
+  height: 16px;
+  width: 80px;
+  border-radius: 4px;
+  background: var(--bg-secondary);
+}
+
+/* ── Shimmer Animation ──────────────────────────────────────────────── */
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.04) 25%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 75%,
+    transparent 100%
+  );
+  animation: shimmer 1.8s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* ── Screen Reader Only ─────────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--gap-sm);
+  }
+}
+
+@media (max-width: 767px) {
+  .skeleton-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--gap-xs);
+  }
+}

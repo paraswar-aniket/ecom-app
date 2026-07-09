@@ -23,6 +23,7 @@ export function useProducts() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   // Ref for AbortController to cancel in-flight requests
   const abortControllerRef = useRef(null);
@@ -64,6 +65,7 @@ export function useProducts() {
           if (!controller.signal.aborted) {
             setProducts(data.products || []);
             setLoading(false);
+            if (initialLoad) setInitialLoad(false);
           }
         })
         .catch((err) => {
@@ -110,6 +112,7 @@ export function useProducts() {
     sortBy,
     products,
     loading,
+    initialLoad,
     error,
 
     // Setters
