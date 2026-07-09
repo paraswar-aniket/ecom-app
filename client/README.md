@@ -38,11 +38,35 @@ The Vite dev server starts on `http://localhost:5173` with the `/api` proxy conf
 
 ---
 
+## Design System
+
+The app uses a **dark-mode glassmorphism** design with CSS custom properties:
+
+| Token | Value | Purpose |
+|-------|-------|---------|
+| `--bg-primary` | `#0f0f1a` | Deep dark background |
+| `--bg-secondary` | `#1a1a2e` | Card / sidebar background |
+| `--accent` | `#6c63ff` | Primary accent — vibrant purple |
+| `--price-color` | `#00d4aa` | Teal green for prices |
+| `--star-color` | `#ffc107` | Gold for star ratings |
+
+### Layout
+
+- **Two-column flexbox**: Sticky sidebar (280px) + scrollable product grid (fluid)
+- **Mobile (<768px)**: Sidebar becomes a toggleable drawer overlay
+- **Tablet (768–1023px)**: Narrower sidebar (240px)
+
+---
+
 ## Current Status
 
-- ✅ Vite + React scaffolding
-- ✅ Axios and react-icons installed
-- ✅ API proxy configured (`/api` → `http://localhost:5000`)
-- ✅ Google Fonts (Inter) linked
-- ✅ SEO meta tags added
-- ✅ Boilerplate cleaned up
+- ✅ Vite + React scaffolding with proxy
+- ✅ Full CSS design system (tokens, reset, scrollbar, layout)
+- ✅ Two-column layout skeleton (aside + main)
+- ✅ Mobile-responsive drawer sidebar
+- ✅ Gradient ShopVibe branding
+- 🔲 API layer & useProducts hook
+- 🔲 Product grid & cards
+- 🔲 Sidebar filter controls
+- 🔲 Sort, reset, empty state
+- 🔲 Loading skeletons & animations

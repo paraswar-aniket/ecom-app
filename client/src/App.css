@@ -1,1 +1,264 @@
-/* App styles — design system will be added in the next commit */
+/* ═══════════════════════════════════════════════════════════════════════
+   ShopVibe Design System — CSS Variables, Global Styles & Utilities
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── Design Tokens ──────────────────────────────────────────────────── */
+:root {
+  /* Colours — dark-mode-first palette */
+  --bg-primary:       #0f0f1a;
+  --bg-secondary:     #1a1a2e;
+  --bg-glass:         rgba(255, 255, 255, 0.05);
+  --bg-glass-hover:   rgba(255, 255, 255, 0.08);
+  --text-primary:     #e0e0e0;
+  --text-secondary:   #a0a0b0;
+  --accent:           #6c63ff;
+  --accent-glow:      rgba(108, 99, 255, 0.3);
+  --accent-hover:     #7f78ff;
+  --price-color:      #00d4aa;
+  --star-color:       #ffc107;
+  --danger:           #ff4757;
+  --danger-hover:     #ff6b7a;
+  --border:           rgba(255, 255, 255, 0.08);
+  --border-hover:     rgba(255, 255, 255, 0.15);
+  --shadow:           0 4px 24px rgba(0, 0, 0, 0.4);
+  --shadow-lg:        0 8px 40px rgba(0, 0, 0, 0.5);
+
+  /* Typography */
+  --font-family:      'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-xs:     0.7rem;
+  --font-size-sm:     0.8rem;
+  --font-size-base:   0.95rem;
+  --font-size-lg:     1.15rem;
+  --font-size-xl:     1.5rem;
+  --font-size-2xl:    2rem;
+  --font-weight-light:   300;
+  --font-weight-normal:  400;
+  --font-weight-medium:  500;
+  --font-weight-semi:    600;
+  --font-weight-bold:    700;
+
+  /* Spacing */
+  --sidebar-width:    280px;
+  --card-radius:      12px;
+  --radius-sm:        6px;
+  --radius-md:        8px;
+  --radius-lg:        16px;
+  --gap:              20px;
+  --gap-sm:           12px;
+  --gap-xs:           8px;
+
+  /* Transitions */
+  --transition-fast:  0.15s ease;
+  --transition-base:  0.25s ease;
+  --transition-slow:  0.4s ease;
+}
+
+/* ── Global Reset ───────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Custom Scrollbar ───────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(108, 99, 255, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(108, 99, 255, 0.5);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(108, 99, 255, 0.3) var(--bg-primary);
+}
+
+/* ── Selection ──────────────────────────────────────────────────────── */
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+/* ── Links ──────────────────────────────────────────────────────────── */
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+/* ── Images ─────────────────────────────────────────────────────────── */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ── Buttons Base ───────────────────────────────────────────────────── */
+button {
+  font-family: var(--font-family);
+  cursor: pointer;
+  border: none;
+  outline: none;
+  font-size: var(--font-size-base);
+  transition: all var(--transition-fast);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════
+   App Layout — Two-Column Flexbox
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ── Sidebar ────────────────────────────────────────────────────────── */
+.app__sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  height: 100vh;
+  position: sticky;
+  top: 0;
+  overflow-y: auto;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+/* ── Main Content ───────────────────────────────────────────────────── */
+.app__main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--gap);
+}
+
+/* ── Header Bar ─────────────────────────────────────────────────────── */
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--gap);
+  padding-bottom: var(--gap);
+  border-bottom: 1px solid var(--border);
+}
+
+.app__title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  background: linear-gradient(135deg, var(--accent) 0%, #a78bfa 50%, var(--price-color) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.app__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-light);
+}
+
+/* ── Mobile Sidebar Toggle ──────────────────────────────────────────── */
+.app__menu-toggle {
+  display: none;
+  background: var(--bg-glass);
+  color: var(--text-primary);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-lg);
+  border: 1px solid var(--border);
+}
+
+/* ── Responsive ─────────────────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+}
+
+@media (max-width: 767px) {
+  .app {
+    flex-direction: column;
+  }
+
+  .app__sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    min-width: 280px;
+    height: 100vh;
+    z-index: 100;
+    transition: left var(--transition-base);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .app__sidebar--open {
+    left: 0;
+  }
+
+  .app__overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 99;
+  }
+
+  .app__overlay--visible {
+    display: block;
+  }
+
+  .app__menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .app__main {
+    padding: var(--gap-sm);
+  }
+}
