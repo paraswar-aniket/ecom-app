@@ -32,9 +32,7 @@ npm install
 npm run dev
 ```
 
-The Vite dev server starts on `http://localhost:5173` with the `/api` proxy configured to forward requests to the Express backend on port 5000.
-
-> **Note:** Make sure the backend server is running on port 5000 before starting the frontend.
+> **Note:** Backend must be running on port 5000 first. The Vite proxy forwards `/api` requests automatically.
 
 ---
 
@@ -43,62 +41,54 @@ The Vite dev server starts on `http://localhost:5173` with the `/api` proxy conf
 ```
 App.jsx
 ├── useProducts() hook ──── manages all filter state + API calls
-│   ├── categories[]        selected category names
-│   ├── priceRange{min,max} price bounds
-│   ├── minRating           minimum star rating
-│   ├── sortBy              sort order key
-│   ├── products[]          fetched product list
-│   ├── loading / error     request state
-│   └── resetFilters()      resets all filters
 │
-├── Sidebar (aside)         filter controls (coming soon)
+├── Sidebar (aside)
+│   └── CategoryFilter ──── 6 category checkboxes with animated checks
+│       (PriceRangeSlider, RatingFilter, ResetButton coming next)
+│
 └── ProductGrid (main)
-    ├── ProductCard          image, name, price, rating, category badge
-    └── StarRating           reusable filled/half/empty star display
+    ├── ProductCard ──────── glassmorphism card with hover animations
+    └── StarRating ──────── reusable filled/half/empty star display
 ```
 
-### Components
+### Data Flow
 
-| Component | Purpose |
-|-----------|---------|
-| `ProductGrid` | CSS Grid container with auto-fill responsive columns |
-| `ProductCard` | Glassmorphism card with hover lift, image zoom, gradient category badge |
-| `StarRating` | Full/half/empty star icons with numeric rating display |
+1. User clicks a category checkbox
+2. `CategoryFilter` calls `setCategories()` from the hook
+3. `useEffect` detects change → fires `GET /api/products?categories=...`
+4. Response updates `products[]` state
+5. `ProductGrid` re-renders with filtered cards
 
-### Key Animations
-
-| Animation | Trigger |
-|-----------|---------|
-| `fadeInUp` | Card entrance — cards fade in and slide up |
-| `translateY(-4px)` | Card hover — subtle lift effect |
-| `scale(1.05)` | Image hover — gentle zoom inside card |
+**Key:** Frontend never filters data — every change triggers a backend API call.
 
 ---
 
-## Design System
+## Components
 
-| Token | Value | Purpose |
-|-------|-------|---------|
-| `--bg-primary` | `#0f0f1a` | Deep dark background |
-| `--bg-secondary` | `#1a1a2e` | Card / sidebar background |
-| `--accent` | `#6c63ff` | Primary accent — vibrant purple |
-| `--price-color` | `#00d4aa` | Teal green for prices |
-| `--star-color` | `#ffc107` | Gold for star ratings |
+| Component | Status | Purpose |
+|-----------|--------|---------|
+| `Sidebar` | ✅ | Sticky filter panel container |
+| `CategoryFilter` | ✅ | 6 category checkboxes with custom SVG checkmark animation |
+| `ProductGrid` | ✅ | CSS Grid with auto-fill responsive columns |
+| `ProductCard` | ✅ | Glassmorphism card with hover lift, image zoom |
+| `StarRating` | ✅ | Full/half/empty star icons with numeric display |
+| `PriceRangeSlider` | 🔲 | Dual-thumb range slider |
+| `RatingFilter` | 🔲 | Radio buttons with star display |
+| `ResetButton` | 🔲 | Reset all filters |
+| `SortDropdown` | 🔲 | Sort by price/rating |
+| `EmptyState` | 🔲 | No results message |
+| `Loader` | 🔲 | Skeleton loading cards |
 
 ---
 
 ## Current Status
 
 - ✅ Vite + React scaffolding with proxy
-- ✅ Full CSS design system (tokens, reset, scrollbar, layout)
-- ✅ Two-column layout skeleton (aside + main)
-- ✅ API layer with Axios + AbortController
-- ✅ useProducts custom hook with debouncing
-- ✅ ProductCard with hover animations & glassmorphism
-- ✅ ProductGrid with responsive CSS Grid
-- ✅ StarRating reusable component
-- 🔲 Sidebar filter controls (category, price, rating)
-- 🔲 Sort dropdown
-- 🔲 Reset button & empty state
-- 🔲 Loading skeletons & micro-animations
-- 🔲 Responsive mobile design & accessibility
+- ✅ Full CSS design system (dark mode glassmorphism)
+- ✅ API layer with Axios + AbortController + debouncing
+- ✅ ProductCard & ProductGrid with animations
+- ✅ Sidebar with CategoryFilter (end-to-end filtering works)
+- 🔲 Price range slider
+- 🔲 Rating filter
+- 🔲 Sort, reset, empty state, loading skeletons
+- 🔲 Responsive mobile design & accessibility polish

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { HiOutlineMenuAlt3 } from 'react-icons/hi'
 import { useProducts } from './hooks/useProducts'
+import Sidebar from './components/Sidebar/Sidebar'
 import ProductGrid from './components/ProductGrid/ProductGrid'
 import './App.css'
 
@@ -25,12 +26,16 @@ function App() {
 
       {/* Sidebar */}
       <aside className={`app__sidebar ${sidebarOpen ? 'app__sidebar--open' : ''}`}>
-        <div style={{ padding: 'var(--gap)' }}>
-          <h2 style={{ color: 'var(--text-primary)', fontSize: 'var(--font-size-lg)' }}>Filters</h2>
-          <p style={{ color: 'var(--text-secondary)', fontSize: 'var(--font-size-sm)', marginTop: '8px' }}>
-            Filter controls coming in next commits...
-          </p>
-        </div>
+        <Sidebar
+          categories={categories}
+          setCategories={setCategories}
+          priceRange={priceRange}
+          setPriceRange={setPriceRange}
+          minRating={minRating}
+          setMinRating={setMinRating}
+          resetFilters={resetFilters}
+          closeSidebar={() => setSidebarOpen(false)}
+        />
       </aside>
 
       {/* Main Content */}
