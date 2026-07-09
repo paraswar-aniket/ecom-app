@@ -70,7 +70,7 @@ function App() {
         )}
 
         {!error && (
-          <ProductGrid products={products} loading={loading} />
+          <ProductGrid products={products} loading={loading} resetFilters={resetFilters} />
         )}
       </main>
     </div>

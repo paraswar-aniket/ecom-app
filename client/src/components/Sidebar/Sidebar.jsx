@@ -1,6 +1,7 @@
 import CategoryFilter from './CategoryFilter';
 import PriceRangeSlider from './PriceRangeSlider';
 import RatingFilter from './RatingFilter';
+import ResetButton from './ResetButton';
 import './Sidebar.css';
 
 /**
@@ -50,7 +51,8 @@ function Sidebar({
           onChange={setMinRating}
         />
 
-        {/* Reset Button — coming in Commit 17 */}
+        {/* Reset All Filters */}
+        <ResetButton onReset={resetFilters} />
       </div>
     </div>
   );

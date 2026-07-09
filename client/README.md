@@ -45,21 +45,23 @@ App.jsx
 ├── Sidebar (aside)
 │   ├── CategoryFilter ──── 6 category checkboxes
 │   ├── PriceRangeSlider ── dual-thumb $0–$2,000 slider
-│   └── RatingFilter ────── 5 radio buttons (1★ to 5★)
-│       (ResetButton coming next)
+│   ├── RatingFilter ────── 5 radio buttons (1★ to 5★)
+│   └── ResetButton ─────── resets all filters to defaults
 │
 └── ProductGrid (main)
     ├── ProductCard ──────── glassmorphism card with hover animations
-    └── StarRating ──────── reusable filled/half/empty star display
+    ├── StarRating ──────── reusable filled/half/empty star display
+    └── EmptyState ──────── "No items match" + Reset Filters CTA
 ```
 
-### Simultaneous Filtering
+### Edge Cases Handled
 
-All three filters work **simultaneously** — selecting Electronics + $50-$200 + 4★ sends:
-```
-GET /api/products?categories=Electronics&minPrice=50&maxPrice=200&minRating=4
-```
-Backend AND-s all filters together and returns the intersection.
+| Scenario | Behaviour |
+|----------|-----------|
+| Zero matching products | Grid → EmptyState with "Reset Filters" button |
+| All filters cleared | Full inventory (48 products) |
+| Price slider at extremes | $0–$2,000 = no price filter |
+| Rating = 1★ | Shows all products |
 
 ---
 
@@ -71,11 +73,11 @@ Backend AND-s all filters together and returns the intersection.
 | `CategoryFilter` | ✅ | 6 checkboxes with SVG checkmark animation |
 | `PriceRangeSlider` | ✅ | Dual-thumb range slider ($0–$2,000) |
 | `RatingFilter` | ✅ | 5 radio buttons with star icons & accent glow |
+| `ResetButton` | ✅ | Danger-styled reset with icon spin animation |
 | `ProductGrid` | ✅ | CSS Grid with auto-fill responsive columns |
 | `ProductCard` | ✅ | Glassmorphism card with hover lift, image zoom |
 | `StarRating` | ✅ | Full/half/empty star icons |
-| `ResetButton` | 🔲 | Reset all filters |
-| `EmptyState` | 🔲 | No results message + reset CTA |
+| `EmptyState` | ✅ | No results with reset CTA |
 | `SortDropdown` | 🔲 | Sort by price/rating |
 | `Loader` | 🔲 | Skeleton loading cards |
 
@@ -84,10 +86,10 @@ Backend AND-s all filters together and returns the intersection.
 ## Current Status
 
 - ✅ All three filter controls working end-to-end
-- ✅ Combinatorial intersect filtering (category + price + rating)
+- ✅ Empty state with reset button
+- ✅ Sidebar reset button (resets all filters + sort)
 - ✅ Premium dark mode glassmorphism design
-- ✅ Debounced API calls with AbortController
-- 🔲 Empty state & reset button
 - 🔲 Sort dropdown
 - 🔲 Loading skeletons & micro-animations
 - 🔲 Responsive mobile design & accessibility polish
+- 🔲 Final README & cleanup
