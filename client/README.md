@@ -38,9 +38,39 @@ The Vite dev server starts on `http://localhost:5173` with the `/api` proxy conf
 
 ---
 
-## Design System
+## Architecture
 
-The app uses a **dark-mode glassmorphism** design with CSS custom properties:
+```
+App.jsx
+├── useProducts() hook ──── manages all filter state + API calls
+│   ├── categories[]        selected category names
+│   ├── priceRange{min,max} price bounds
+│   ├── minRating           minimum star rating
+│   ├── sortBy              sort order key
+│   ├── products[]          fetched product list
+│   ├── loading / error     request state
+│   └── resetFilters()      resets all filters
+│
+├── Sidebar (aside)         filter controls (coming soon)
+└── ProductGrid (main)      product cards (coming soon)
+```
+
+### API Layer (`productApi.js`)
+
+- Axios instance with `baseURL: '/api'` (proxied to Express)
+- `fetchProducts(params, signal)` — builds query string, supports AbortController
+- Handles: `categories`, `minPrice`, `maxPrice`, `minRating`, `sortBy`
+
+### Custom Hook (`useProducts.js`)
+
+- Reactive `useEffect` watches all filter state
+- **300ms debounce** to avoid API spam during slider drags
+- **AbortController** cancels in-flight requests on rapid filter changes
+- `resetFilters()` resets everything to defaults
+
+---
+
+## Design System
 
 | Token | Value | Purpose |
 |-------|-------|---------|
@@ -50,12 +80,6 @@ The app uses a **dark-mode glassmorphism** design with CSS custom properties:
 | `--price-color` | `#00d4aa` | Teal green for prices |
 | `--star-color` | `#ffc107` | Gold for star ratings |
 
-### Layout
-
-- **Two-column flexbox**: Sticky sidebar (280px) + scrollable product grid (fluid)
-- **Mobile (<768px)**: Sidebar becomes a toggleable drawer overlay
-- **Tablet (768–1023px)**: Narrower sidebar (240px)
-
 ---
 
 ## Current Status
@@ -63,9 +87,9 @@ The app uses a **dark-mode glassmorphism** design with CSS custom properties:
 - ✅ Vite + React scaffolding with proxy
 - ✅ Full CSS design system (tokens, reset, scrollbar, layout)
 - ✅ Two-column layout skeleton (aside + main)
-- ✅ Mobile-responsive drawer sidebar
-- ✅ Gradient ShopVibe branding
-- 🔲 API layer & useProducts hook
+- ✅ API layer with Axios + AbortController
+- ✅ useProducts custom hook with debouncing
+- ✅ Products fetched on mount (48 products verified)
 - 🔲 Product grid & cards
 - 🔲 Sidebar filter controls
 - 🔲 Sort, reset, empty state
