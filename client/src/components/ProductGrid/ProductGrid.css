@@ -92,3 +92,69 @@
 .empty-state__reset:active {
   transform: scale(0.97);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   SortDropdown — Custom styled select
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.sort-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: var(--gap);
+  justify-content: flex-end;
+}
+
+.sort-dropdown__label {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.sort-dropdown__wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.sort-dropdown__select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: var(--bg-glass);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 36px 8px 14px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  outline: none;
+  transition: all var(--transition-fast);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.sort-dropdown__select:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-glass-hover);
+}
+
+.sort-dropdown__select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+}
+
+.sort-dropdown__select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.sort-dropdown__icon {
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}

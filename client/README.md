@@ -49,19 +49,18 @@ App.jsx
 │   └── ResetButton ─────── resets all filters to defaults
 │
 └── ProductGrid (main)
+    ├── SortDropdown ─────── sort by price/rating dropdown
     ├── ProductCard ──────── glassmorphism card with hover animations
     ├── StarRating ──────── reusable filled/half/empty star display
     └── EmptyState ──────── "No items match" + Reset Filters CTA
 ```
 
-### Edge Cases Handled
+### Filter + Sort Pipeline
 
-| Scenario | Behaviour |
-|----------|-----------|
-| Zero matching products | Grid → EmptyState with "Reset Filters" button |
-| All filters cleared | Full inventory (48 products) |
-| Price slider at extremes | $0–$2,000 = no price filter |
-| Rating = 1★ | Shows all products |
+Filters execute first, then sort applies to filtered results:
+```
+GET /api/products?categories=Electronics&minPrice=50&maxPrice=200&minRating=4&sortBy=price_asc
+```
 
 ---
 
@@ -78,7 +77,7 @@ App.jsx
 | `ProductCard` | ✅ | Glassmorphism card with hover lift, image zoom |
 | `StarRating` | ✅ | Full/half/empty star icons |
 | `EmptyState` | ✅ | No results with reset CTA |
-| `SortDropdown` | 🔲 | Sort by price/rating |
+| `SortDropdown` | ✅ | 4 sort options with custom styled select |
 | `Loader` | 🔲 | Skeleton loading cards |
 
 ---
@@ -86,10 +85,9 @@ App.jsx
 ## Current Status
 
 - ✅ All three filter controls working end-to-end
-- ✅ Empty state with reset button
-- ✅ Sidebar reset button (resets all filters + sort)
-- ✅ Premium dark mode glassmorphism design
-- 🔲 Sort dropdown
+- ✅ Sort dropdown (Default, Price Low/High, Top Rated)
+- ✅ Empty state with reset + sidebar reset button
+- ✅ Filter + sort pipeline verified
 - 🔲 Loading skeletons & micro-animations
 - 🔲 Responsive mobile design & accessibility polish
 - 🔲 Final README & cleanup
