@@ -43,8 +43,9 @@ App.jsx
 ├── useProducts() hook ──── manages all filter state + API calls
 │
 ├── Sidebar (aside)
-│   └── CategoryFilter ──── 6 category checkboxes with animated checks
-│       (PriceRangeSlider, RatingFilter, ResetButton coming next)
+│   ├── CategoryFilter ──── 6 category checkboxes with animated checks
+│   └── PriceRangeSlider ── dual-thumb min/max price selector
+│       (RatingFilter, ResetButton coming next)
 │
 └── ProductGrid (main)
     ├── ProductCard ──────── glassmorphism card with hover animations
@@ -53,13 +54,12 @@ App.jsx
 
 ### Data Flow
 
-1. User clicks a category checkbox
-2. `CategoryFilter` calls `setCategories()` from the hook
-3. `useEffect` detects change → fires `GET /api/products?categories=...`
-4. Response updates `products[]` state
-5. `ProductGrid` re-renders with filtered cards
+1. User interacts with a filter (checkbox, slider, radio, dropdown)
+2. Component calls the corresponding setter from the hook
+3. `useEffect` detects change → debounced `GET /api/products?...`
+4. Response updates `products[]` → grid re-renders
 
-**Key:** Frontend never filters data — every change triggers a backend API call.
+**Key:** Frontend never filters data — all business logic is server-side.
 
 ---
 
@@ -68,11 +68,11 @@ App.jsx
 | Component | Status | Purpose |
 |-----------|--------|---------|
 | `Sidebar` | ✅ | Sticky filter panel container |
-| `CategoryFilter` | ✅ | 6 category checkboxes with custom SVG checkmark animation |
+| `CategoryFilter` | ✅ | 6 checkboxes with SVG checkmark animation |
+| `PriceRangeSlider` | ✅ | Dual-thumb range slider ($0–$2,000) |
 | `ProductGrid` | ✅ | CSS Grid with auto-fill responsive columns |
 | `ProductCard` | ✅ | Glassmorphism card with hover lift, image zoom |
-| `StarRating` | ✅ | Full/half/empty star icons with numeric display |
-| `PriceRangeSlider` | 🔲 | Dual-thumb range slider |
+| `StarRating` | ✅ | Full/half/empty star icons |
 | `RatingFilter` | 🔲 | Radio buttons with star display |
 | `ResetButton` | 🔲 | Reset all filters |
 | `SortDropdown` | 🔲 | Sort by price/rating |
@@ -87,8 +87,8 @@ App.jsx
 - ✅ Full CSS design system (dark mode glassmorphism)
 - ✅ API layer with Axios + AbortController + debouncing
 - ✅ ProductCard & ProductGrid with animations
-- ✅ Sidebar with CategoryFilter (end-to-end filtering works)
-- 🔲 Price range slider
+- ✅ Sidebar with CategoryFilter (end-to-end)
+- ✅ PriceRangeSlider with dual-thumb control
 - 🔲 Rating filter
 - 🔲 Sort, reset, empty state, loading skeletons
 - 🔲 Responsive mobile design & accessibility polish

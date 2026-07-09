@@ -1,4 +1,5 @@
 import CategoryFilter from './CategoryFilter';
+import PriceRangeSlider from './PriceRangeSlider';
 import './Sidebar.css';
 
 /**
@@ -36,7 +37,12 @@ function Sidebar({
           onChange={setCategories}
         />
 
-        {/* Price Range — coming in Commit 15 */}
+        {/* Price Range Slider */}
+        <PriceRangeSlider
+          priceRange={priceRange}
+          onChange={setPriceRange}
+        />
+
         {/* Rating Filter — coming in Commit 16 */}
         {/* Reset Button — coming in Commit 17 */}
       </div>

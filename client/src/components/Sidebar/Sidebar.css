@@ -170,3 +170,107 @@
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   PriceRangeSlider — Dual-thumb range slider
+   ═══════════════════════════════════════════════════════════════════════ */
+
+.price-slider {
+  position: relative;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+.price-slider__track {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Range Inputs (overlaid) ────────────────────────────────────────── */
+.price-slider__input {
+  position: absolute;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  z-index: 1;
+}
+
+.price-slider__input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  border: 3px solid var(--bg-secondary);
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 0 0 0 var(--accent-glow);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.price-slider__input::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.price-slider__input:active::-webkit-slider-thumb {
+  box-shadow: 0 0 16px var(--accent-glow), 0 0 30px rgba(108, 99, 255, 0.15);
+}
+
+/* Firefox thumb */
+.price-slider__input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
+  border: 3px solid var(--bg-secondary);
+  border-radius: 50%;
+  cursor: pointer;
+  pointer-events: all;
+  box-shadow: 0 0 0 0 var(--accent-glow);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.price-slider__input::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.price-slider__input::-moz-range-track {
+  background: transparent;
+  border: none;
+}
+
+/* Ensure max thumb is above min thumb for overlap zone */
+.price-slider__input--max {
+  z-index: 2;
+}
+
+/* ── Labels ─────────────────────────────────────────────────────────── */
+.price-slider__labels {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.price-slider__value {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semi);
+  color: var(--price-color);
+}
+
+.price-slider__separator {
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
