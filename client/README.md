@@ -43,23 +43,23 @@ App.jsx
 ├── useProducts() hook ──── manages all filter state + API calls
 │
 ├── Sidebar (aside)
-│   ├── CategoryFilter ──── 6 category checkboxes with animated checks
-│   └── PriceRangeSlider ── dual-thumb min/max price selector
-│       (RatingFilter, ResetButton coming next)
+│   ├── CategoryFilter ──── 6 category checkboxes
+│   ├── PriceRangeSlider ── dual-thumb $0–$2,000 slider
+│   └── RatingFilter ────── 5 radio buttons (1★ to 5★)
+│       (ResetButton coming next)
 │
 └── ProductGrid (main)
     ├── ProductCard ──────── glassmorphism card with hover animations
     └── StarRating ──────── reusable filled/half/empty star display
 ```
 
-### Data Flow
+### Simultaneous Filtering
 
-1. User interacts with a filter (checkbox, slider, radio, dropdown)
-2. Component calls the corresponding setter from the hook
-3. `useEffect` detects change → debounced `GET /api/products?...`
-4. Response updates `products[]` → grid re-renders
-
-**Key:** Frontend never filters data — all business logic is server-side.
+All three filters work **simultaneously** — selecting Electronics + $50-$200 + 4★ sends:
+```
+GET /api/products?categories=Electronics&minPrice=50&maxPrice=200&minRating=4
+```
+Backend AND-s all filters together and returns the intersection.
 
 ---
 
@@ -70,25 +70,24 @@ App.jsx
 | `Sidebar` | ✅ | Sticky filter panel container |
 | `CategoryFilter` | ✅ | 6 checkboxes with SVG checkmark animation |
 | `PriceRangeSlider` | ✅ | Dual-thumb range slider ($0–$2,000) |
+| `RatingFilter` | ✅ | 5 radio buttons with star icons & accent glow |
 | `ProductGrid` | ✅ | CSS Grid with auto-fill responsive columns |
 | `ProductCard` | ✅ | Glassmorphism card with hover lift, image zoom |
 | `StarRating` | ✅ | Full/half/empty star icons |
-| `RatingFilter` | 🔲 | Radio buttons with star display |
 | `ResetButton` | 🔲 | Reset all filters |
+| `EmptyState` | 🔲 | No results message + reset CTA |
 | `SortDropdown` | 🔲 | Sort by price/rating |
-| `EmptyState` | 🔲 | No results message |
 | `Loader` | 🔲 | Skeleton loading cards |
 
 ---
 
 ## Current Status
 
-- ✅ Vite + React scaffolding with proxy
-- ✅ Full CSS design system (dark mode glassmorphism)
-- ✅ API layer with Axios + AbortController + debouncing
-- ✅ ProductCard & ProductGrid with animations
-- ✅ Sidebar with CategoryFilter (end-to-end)
-- ✅ PriceRangeSlider with dual-thumb control
-- 🔲 Rating filter
-- 🔲 Sort, reset, empty state, loading skeletons
+- ✅ All three filter controls working end-to-end
+- ✅ Combinatorial intersect filtering (category + price + rating)
+- ✅ Premium dark mode glassmorphism design
+- ✅ Debounced API calls with AbortController
+- 🔲 Empty state & reset button
+- 🔲 Sort dropdown
+- 🔲 Loading skeletons & micro-animations
 - 🔲 Responsive mobile design & accessibility polish
